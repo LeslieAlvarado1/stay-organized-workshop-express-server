@@ -1,10 +1,11 @@
 "use strict";
 
+const userDropdown = document.getElementById("userDropdown");
+const categoryDropdown = document.getElementById("categoryDropdown");
+const priorityDropdown = document.getElementById("priorityDropdown");
+const addButton = document.getElementById("addTodoBtn");
+
 document.addEventListener("DOMContentLoaded", () => {
-  const userDropdown = document.getElementById("userDropdown");
-  const categoryDropdown = document.getElementById("categoryDropdown");
-  const priorityDropdown = document.getElementById("priorityDropdown");
-  const addButton = document.getElementById("addTodoBtn");
 
   grabUserDataFromAPI();
   grabCategoriesFromAPI();
@@ -26,7 +27,6 @@ function grabCategoriesFromAPI() {
 }
 
 function generateUserDropdown(_data) {
-  const userDropdown = document.getElementById("userDropdown"); // Ensure element is re-selected
   _data.forEach((user) => {
     const option = new Option(user.name, user.id);
     userDropdown.appendChild(option);
@@ -34,7 +34,6 @@ function generateUserDropdown(_data) {
 }
 
 function generateCategory(_data) {
-  const categoryDropdown = document.getElementById("categoryDropdown"); // Ensure element is re-selected
   _data.forEach((category) => {
     const option = new Option(category.name, category.id);
     categoryDropdown.appendChild(option);
@@ -42,9 +41,6 @@ function generateCategory(_data) {
 }
 
 function addData() {
-  const userDropdown = document.getElementById("userDropdown"); // Ensure element is re-selected
-  const categoryDropdown = document.getElementById("categoryDropdown"); // Ensure element is re-selected
-  const priorityDropdown = document.getElementById("priorityDropdown"); // Ensure element is re-selected
   const description = document.getElementById("description").value;
   const deadline = document.getElementById("deadline").value;
 
@@ -59,8 +55,6 @@ function addData() {
 
   const todo = { userid, category, description, deadline, priority };
 
-  console.log('Sending data:', todo);
-
   fetch('http://localhost:8083/api/todos', {
     method: 'POST',
     headers: {
@@ -69,9 +63,7 @@ function addData() {
     body: JSON.stringify(todo)
   })
     .then(response => {
-      console.log('Response status:', response.status);
-      console.log('Response headers:', response.headers);
-
+  
       if (!response.ok) {
         return response.text().then(text => { throw new Error(text) });
       }

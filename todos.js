@@ -1,9 +1,10 @@
 "use strict";
 
+const infoButton = document.getElementById("showInfo");
+const userDropdown = document.getElementById("userDropdown"); 
+
 document.addEventListener("DOMContentLoaded", () => {
-  const userDropdown = document.getElementById("userDropdown");
-  const infoButton = document.getElementById("showInfo");
-  
+ 
   grabUserDataFromAPI();
   infoButton.addEventListener("click", displayData);
 });
@@ -17,7 +18,6 @@ function grabUserDataFromAPI() {
 
 
 function generateUserDropdown(_data) {
-  const userDropdown = document.getElementById("userDropdown"); // Ensure element is re-selected
   _data.forEach((user) => {
     const option = new Option(user.name, user.id);
     userDropdown.appendChild(option);
@@ -26,7 +26,6 @@ function generateUserDropdown(_data) {
 
 
 function displayData() {
-  const userDropdown = document.getElementById("userDropdown"); // Ensure element is re-selected
   const userId = userDropdown.value;
 
   fetch("/data/todos.json")
@@ -39,7 +38,7 @@ function displayData() {
 }
 
 function displayTodoList(todos) {
-  const todoList = document.getElementById("todoList"); // Ensure element is re-selected
+  const todoList = document.getElementById("todoList"); 
   todoList.innerHTML = ""; // Clear the current list
 
   if (todos.length === 0) {
